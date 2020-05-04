@@ -1,6 +1,6 @@
 class Avoid {
    PVector pos;
-   
+   // Class to create obstacles
    Avoid (float xx, float yy) {
      pos = new PVector(xx,yy);
    }

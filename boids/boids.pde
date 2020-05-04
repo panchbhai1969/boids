@@ -1,4 +1,4 @@
-
+// Note: A negative value of jar_percentage will lead to the bar to rise in objective 5. 
 ArrayList<Boid> boids;
 ArrayList<Avoid> avoids;
 int objective = 1;
@@ -26,7 +26,7 @@ boolean option_cohese = true;
 int messageTimer = 0;
 String messageText = "";
 
-
+// Initial Setup
 void setup () {
   size(1024, 576);
   textSize(16);
@@ -44,7 +44,7 @@ void setup () {
 }
 
 
-// haha
+// Calculating constants
 void recalculateConstants () {
   maxSpeed = 2.1 * globalScale;
   friendRadius = 60 * globalScale;
@@ -53,7 +53,7 @@ void recalculateConstants () {
   coheseRadius = friendRadius;
 }
 
-
+//Setting up walls
 void setupWalls() {
   avoids = new ArrayList<Avoid>();
    for (int x = 0; x < width; x+= 20) {
@@ -62,6 +62,7 @@ void setupWalls() {
   } 
 }
 
+//Setting up circular walls
 void setupCircle() {
   avoids = new ArrayList<Avoid>();
    for (int x = 0; x < 50; x+= 1) {
@@ -120,7 +121,7 @@ void draw () {
     if(current.return_flag==1){
     jar_percentage += 0.001;
     }
-    //println(jar_percentage);
+    println(jar_percentage);
     current.draw();
     fill(255);
     
@@ -269,7 +270,7 @@ void drawText (String s, float x, float y) {
   text(s, x-1, y-1);
 }
 
-
+// Function to display messages
 void message (String in) {
    messageText = in;
    messageTimer = (int) frameRate * 3;

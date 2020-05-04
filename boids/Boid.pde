@@ -35,10 +35,10 @@ class Boid {
     target = new PVector(1024,576);
     return_flag = 1;
   }
-
+  // Position updates 
   void go (float jar_percentage ) {
     // implementing the refuling logic
-    println(return_trip);
+    
     current_percentage = jar_percentage;
     if(objective>=4 && (return_flag==2 )){
     
@@ -60,6 +60,7 @@ class Boid {
     }
     
     else{
+      // To and fro motion through flags
     if( PVector.dist(this.pos, new PVector(0, 0) )< 100 && return_flag ==3 && objective >=4){
                battery = 2000;
                return_trip = 2000;
@@ -300,8 +301,8 @@ class Boid {
 
     for (Boid other : friends) {
       float d = PVector.dist(pos, other.pos);
-      print("Distance from friends: ");
-      println(d);
+      //print("Distance from friends: ");
+      //println(d);
       // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
       if ((d > 0) && (d < crowdRadius)) {
         // Calculate vector pointing away from neighbor
@@ -324,8 +325,8 @@ class Boid {
 
     for (Avoid other : avoids) {
       float d = PVector.dist(pos, other.pos);
-      print("Distance from Avoids: ");
-      println(avoidRadius);
+      //print("Distance from Avoids: ");
+      //println(avoidRadius);
       // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
       if ((d > 0) && (d < avoidRadius)) {
         // Calculate vector pointing away from neighbor
