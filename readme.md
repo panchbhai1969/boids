@@ -18,7 +18,7 @@ Download processing from https://processing.org/.
 Install the processing software
 Open the projectCode/boids folder in the processing software as a sketch.
 Run the play button on the top left corner.
-Key and corresponding operations:
+Keys and corresponding operations:
 
 |Key| Operation|
 |---|---|
