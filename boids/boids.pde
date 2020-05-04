@@ -70,7 +70,7 @@ void setupCircle() {
   } 
 }
 
-
+//The funtion that iterates repeatedly to generate each frame.
 void draw () {
   noStroke();
   colorMode(HSB);
@@ -144,6 +144,7 @@ void draw () {
   }
 }
 
+//Managing key presses
 void keyPressed () {
   if (key == 'q') {
     tool = "boids";
@@ -207,6 +208,7 @@ void keyPressed () {
 
 }
 
+//Drawing the GUI
 void drawGUI() {
    if(messageTimer > 0) {
       fill((min(30, messageTimer) / 30.0) * 255.0);
@@ -224,7 +226,7 @@ String on(boolean in) {
   return in ? "on" : "off"; 
 }
 
-
+//Handling mouse presses
 void mousePressed () {
   switch (tool) {
   case "boids":

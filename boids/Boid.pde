@@ -37,6 +37,7 @@ class Boid {
   }
 
   void go (float jar_percentage ) {
+    // implementing the refuling logic
     println(return_trip);
     current_percentage = jar_percentage;
     if(objective>=4 && (return_flag==2 )){
@@ -114,12 +115,13 @@ class Boid {
     if(objective >= 4 )
     {
      
-      
+      //implementing the refuling logic
       if(objective == 4 && PVector.dist(this.pos, target )< 100 && battery > return_trip-battery+300 && return_flag ==1){
         return_flag = 2;
         return_trip = return_trip-battery+300;
         println("Stop");
       }
+     //Implemeting the leadership protocol
      if(objective == 5 && PVector.dist(this.pos, target )< 100 && battery > return_trip-battery+300 && return_flag ==1){
         println("Inside");
         return_flag = 2;
@@ -274,7 +276,7 @@ class Boid {
         //sum.div((float)count);
       }
     }
-    
+    // Implemeting the leader logic of Objective 2
     if(objective == 2){
       if(friends.size() == 0){
         leader=true;
