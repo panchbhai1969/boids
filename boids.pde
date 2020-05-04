@@ -1,10 +1,13 @@
-Boid barry;
+
 ArrayList<Boid> boids;
 ArrayList<Avoid> avoids;
+int objective = 1;
+float jar_percentage = 0;
 
 float globalScale = .91;
 float eraseRadius = 20;
 String tool = "boids";
+boolean stop = false;
 
 // boid control
 float maxSpeed;
@@ -23,6 +26,7 @@ boolean option_cohese = true;
 int messageTimer = 0;
 String messageText = "";
 
+
 void setup () {
   size(1024, 576);
   textSize(16);
@@ -36,8 +40,9 @@ void setup () {
     }
   }
   
-  setupWalls();
+  //setupWalls();
 }
+
 
 // haha
 void recalculateConstants () {
@@ -85,10 +90,42 @@ void draw () {
     fill(0, 200, 200);
     ellipse(mouseX, mouseY, 15, 15);
   }
+  boolean newbie = true;
   for (int i = 0; i <boids.size(); i++) {
     Boid current = boids.get(i);
-    current.go();
+    current.objective = objective;
+    if(stop){
+    
     current.draw();
+    }
+    else{
+    if(current.battery<0 && objective >= 4){
+    boids.remove(i);
+    } 
+    if(PVector.dist(current.pos, new PVector(1024,576)) < 100 && objective==2)
+          boids.remove(i);
+    else{
+    current.go(jar_percentage);
+    
+    if(current.order && current.controller && newbie){
+      current.order = false;
+      boids.add(new Boid(0, 0 , true, objective));
+      message(boids.size() + " (Automatic) Total Boid" + s(boids.size()));
+      
+    }
+    
+    if(current.return_flag==2){
+    jar_percentage -= 0.001;
+    }
+    if(current.return_flag==1){
+    jar_percentage += 0.001;
+    }
+    //println(jar_percentage);
+    current.draw();
+    fill(255);
+    
+    rect(1010,576,10,1024*jar_percentage*0.1);
+    }}
   }
 
   for (int i = 0; i <avoids.size(); i++) {
@@ -101,6 +138,10 @@ void draw () {
     messageTimer -= 1; 
   }
   drawGUI();
+  if(objective ==2){
+  ellipse(1024,576,100,100);
+  ellipse(0,0,100,100);
+  }
 }
 
 void keyPressed () {
@@ -134,6 +175,29 @@ void keyPressed () {
   }else if (key == '5') {
      option_noise = option_noise ? false : true;
      message("Turned noise " + on(option_noise));
+  } else if (key == '6') {
+     tool = "leader";
+     message("Add leader");
+  } else if (key == 's') {
+     stop =  !stop;
+     message("Stopped");
+  } else if (key == 'x') {
+     objective =  2;
+     message("Objective 2");
+  } 
+  else if (key == 'z') {
+     objective =  1;
+     message("Objective 1");
+  }else if (key == 'c') {
+     objective =  3;
+     message("Objective 3");
+  }
+  else if (key == 'v') {
+     objective =  4;
+     message("Objective 4");
+  } else if (key == 'b') {
+     objective =  5;
+     message("Objective 5");
   } else if (key == ',') {
      setupWalls(); 
   } else if (key == '.') {
@@ -145,34 +209,42 @@ void keyPressed () {
 
 void drawGUI() {
    if(messageTimer > 0) {
-     fill((min(30, messageTimer) / 30.0) * 255.0);
-
-    text(messageText, 10, height - 20); 
+      fill((min(30, messageTimer) / 30.0) * 255.0);
+      text(messageText, 10, height - 20); 
    }
 }
+
 
 String s(int count) {
   return (count != 1) ? "s" : "";
 }
 
+
 String on(boolean in) {
   return in ? "on" : "off"; 
 }
 
+
 void mousePressed () {
   switch (tool) {
   case "boids":
-    boids.add(new Boid(mouseX, mouseY));
+    boids.add(new Boid(mouseX, mouseY , false, objective));
     message(boids.size() + " Total Boid" + s(boids.size()));
     break;
   case "avoids":
     avoids.add(new Avoid(mouseX, mouseY));
     break;
+   case "leader":
+    boids.add(new Boid(mouseX, mouseY , true, objective));
+    message(boids.size() + " Total Boid" + s(boids.size()));
+    break;
   }
 }
 
+
 void erase () {
   for (int i = boids.size()-1; i > -1; i--) {
+    // A single state is used thus the calculations a
     Boid b = boids.get(i);
     if (abs(b.pos.x - mouseX) < eraseRadius && abs(b.pos.y - mouseY) < eraseRadius) {
       boids.remove(i);
@@ -186,6 +258,7 @@ void erase () {
     }
   }
 }
+
 
 void drawText (String s, float x, float y) {
   fill(0);
