@@ -38,6 +38,6 @@ Keys and corresponding operations:
 |x|Objective 2|
 |c|Objective 3 (add leaders using key 6)|
 |v |Objective 4 (add leaders using key 6)|
-|b|Objective 5 (add leaders using key 6), see the bottom of the processing editor to see the score of the rectangle bar: A negative value leads to the rise of the rectangle bar.|
+|b|Objective 5 (add leaders using key 6), see the bottom of the processing editor to see the score of the rectangle bar: A negative value leads to the rise of the rectangle bar. Bar raises only because of the leader drones.|
 |,|Add walls to simulation|
 |.|Add circular wall to simulation|
